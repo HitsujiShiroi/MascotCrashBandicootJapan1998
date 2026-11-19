@@ -42,3 +42,10 @@ Download the standalone package for your operating system from the [**Releases**
 ```bash
 pip install PySide6
 python main.py
+
+## Credits & Disclaimer
+Original 1998 Software & Assets: SME Intermedia Inc. / flagship inc. / Sony Computer Entertainment / Universal Interactive Studios.
+
+Cross-Platform Remaster & Preservation: @HitsujiShiroi (2026).
+
+This is a non-profit fan preservation project released under the MIT License for educational and historical purposes.
