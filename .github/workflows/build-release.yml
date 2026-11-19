@@ -1,0 +1,80 @@
+name: Build Mascot Crash Bandicoot Japan 1998 (Win / macOS / Linux)
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install PySide6 pyinstaller
+      - name: Build Windows EXE
+        run: |
+          pyinstaller --noconfirm --onefile --windowed `
+            --name "MascotCrashBandicootJapan1998" `
+            --icon "assets/extras/icons/CrashPlate.ico" `
+            --add-data "assets;assets" `
+            main.py
+          Compress-Archive -Path dist/MascotCrashBandicootJapan1998.exe -DestinationPath MascotCrashBandicootJapan1998-Windows.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MascotCrashBandicootJapan1998-Windows
+          path: MascotCrashBandicootJapan1998-Windows.zip
+
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip3 install PySide6 pyinstaller
+      - name: Build macOS .app
+        run: |
+          pyinstaller --noconfirm --windowed \
+            --name "MascotCrashBandicootJapan1998" \
+            --add-data "assets:assets" \
+            main.py
+          cd dist && zip -r ../MascotCrashBandicootJapan1998-macOS.zip MascotCrashBandicootJapan1998.app
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MascotCrashBandicootJapan1998-macOS
+          path: MascotCrashBandicootJapan1998-macOS.zip
+
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install system Qt & multimedia libs
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libegl1 libxkbcommon-x11-0 libxcb-cursor0 libpulse0 libgstreamer1.0-0 gstreamer1.0-plugins-base gstreamer1.0-plugins-good
+          python3 -m pip install --upgrade pip
+          pip3 install PySide6 pyinstaller
+      - name: Build Linux binary
+        run: |
+          pyinstaller --noconfirm --onefile --windowed \
+            --name "MascotCrashBandicootJapan1998" \
+            --add-data "assets:assets" \
+            main.py
+          cd dist && tar -czvf ../MascotCrashBandicootJapan1998-Linux.tar.gz MascotCrashBandicootJapan1998
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MascotCrashBandicootJapan1998-Linux
+          path: MascotCrashBandicootJapan1998-Linux.tar.gz
