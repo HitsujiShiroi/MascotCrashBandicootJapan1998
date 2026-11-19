@@ -3,6 +3,8 @@
 
 A faithful, modern cross-platform recreation and archival preservation of the **1998 Japan-exclusive PC desktop mascot** originally developed by **SME Intermedia Inc. / flagship inc.** for Windows 95/98, rebuilt in Python + PySide6 for **Windows 10/11, macOS, and Linux**.
 
+<img width="1280" height="960" alt="C_Wall01" src="https://github.com/user-attachments/assets/6ceb0a3d-4f21-4547-9648-d651efac7bd1" />
+
 ---
 
 ## Features
